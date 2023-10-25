@@ -9,3 +9,6 @@ npm i express nodemon
 
 # Starting the app
 added scripts start: 'node index.ts', dev: 'nodemon index.ts'
+
+# Adding typescript
+npm i @types/express @types/node
