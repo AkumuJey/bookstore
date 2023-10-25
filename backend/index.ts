@@ -3,7 +3,9 @@ import router from './routes'
 
 
 const app: Express = express()
-app.get('/', router)
+
+app.use(express.json())
+app.use('/', router)
 
 const PORT = 5550
 
