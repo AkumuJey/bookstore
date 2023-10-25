@@ -1,10 +1,9 @@
 import express, {Express, Response, Request} from 'express'
+import router from './routes'
 
 
 const app: Express = express()
-app.get('/', (req : Request, res: Response) => {
-    res.status(234).send('Hellow rfgetfvrbrgbrg')
-})
+app.get('/', router)
 
 const PORT = 5550
 
