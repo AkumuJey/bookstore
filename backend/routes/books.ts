@@ -1,4 +1,6 @@
 import express from 'express'
+import { getCollection } from '../db'
+import { Collection } from 'mongodb'
 
 const booksRoute = express.Router()
 
@@ -8,8 +10,13 @@ const books = [
     { id: 2, title: "Book Two", author: "Author Two" },
 ]
 booksRoute.get('/', (req, res) => {
-    res.json(books)
-    // res.status(200).send(JSON.stringify(books))
+    try {
+        const booksCollection: Collection | null = getCollection('books')
+        booksCollection?.insertOne(books[1])
+        res.json('Successs')
+    } catch (error) {
+        console.log('Failed to send');
+    }
 })
 
 export default booksRoute
