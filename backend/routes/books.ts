@@ -8,7 +8,8 @@ const books = [
     { id: 2, title: "Book Two", author: "Author Two" },
 ]
 booksRoute.get('/', (req, res) => {
-    res.status(200).send(JSON.stringify(books))
+    res.json(books)
+    // res.status(200).send(JSON.stringify(books))
 })
 
 export default booksRoute

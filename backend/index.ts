@@ -7,7 +7,7 @@ const app: Express = express()
 app.use(express.json())
 app.use('/', router)
 
-const PORT = 5550
+const PORT = 5000
 
 app.listen(PORT, () => {
     console.log(`App is running at ${PORT}`);
