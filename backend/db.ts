@@ -5,7 +5,7 @@ export const connectToDb = (cb:CallableFunction) => {
     MongoClient.connect('mongodb://localhost:27017/bookstore')
     .then((client) => {
         dbConnection = client.db()
-        console.log();
+        console.log('connected');
         
         return cb()
     }).catch((err) => {
@@ -13,7 +13,11 @@ export const connectToDb = (cb:CallableFunction) => {
         return cb(err)
     })
 }
-export const getDb = () => dbConnection
+export const getDb = () => {
+    console.log('Working');
+    
+    return dbConnection
+}
 
 export const getCollection = (name: string):Collection | null => {
     return dbConnection?.collection(name) || null
