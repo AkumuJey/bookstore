@@ -3,10 +3,10 @@ import { getCollection } from '../db'
 import { Collection, ObjectId } from 'mongodb'
 
 const booksRoute = express.Router()
+const booksCollection: Collection | null = getCollection('books')
 
 booksRoute.get('/', async (req, res) => {
     try {
-        const booksCollection: Collection | null = getCollection('books')
         if (booksCollection) {
             let booksArray = await booksCollection.find().toArray()
             res.status(200).json({
@@ -26,7 +26,6 @@ booksRoute.get('/', async (req, res) => {
 booksRoute.post('/', async (req, res) => {
     const newBook = req.body
     try {
-        const booksCollection: Collection | null = getCollection('books')
         const result = await booksCollection?.insertOne(newBook)
         if (result?.acknowledged) {
             res.status(200).send({message: 'Added New Book Successfully'})
@@ -41,7 +40,6 @@ booksRoute.delete('/:id', async (req, res) => {
     try {
         const id = req.params.id
         const bookId = new ObjectId(id)
-        const booksCollection: Collection | null = getCollection('books')
         const result = await booksCollection?.deleteOne({_id: bookId})
         if (result?.acknowledged) {
             res.status(200).send('Deleted book successfully')
@@ -59,7 +57,6 @@ booksRoute.put('/:id', async(req, res) => {
     const id = req.params.id
     try {
         const bookId = new ObjectId(id)
-        const booksCollection = getCollection('books')
         const updatedBook = req.body
         const result = await booksCollection?.updateOne({ _id : bookId }, {$set: updatedBook} )
         if (result?.acknowledged) {
@@ -82,7 +79,6 @@ booksRoute.get('/:id',async (req, res) => {
     const id = req.params.id
     try {
         const bookId = new ObjectId(id)
-        const booksCollection = getCollection('books')
         const foundBook = await booksCollection?.findOne({_id: bookId})
         if (foundBook) {
             res.status(200).json(foundBook)
