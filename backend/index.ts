@@ -1,7 +1,6 @@
 import express, {Express} from 'express'
-import { connectToDb, getDb } from './db'
 import router from './routes'
-import { Db } from 'mongodb'
+import mongoose from 'mongoose'
 
 //Initialization of the app and middlewares
 const app: Express = express()
@@ -12,18 +11,16 @@ app.use('/', router)
 
 const PORT = 5000
 //Connecting to db
-
-let db: Db | null
-connectToDb((err : Error) => {
-    if (!err) {
-        app.listen(PORT, () => {
-            console.log(`App is running at ${PORT}`);
-        })
-        db = getDb()
-    } else {
-        console.log('Failed o connect');
-        
-    }
+export let db : mongoose.Connection
+const uri = 'mongodb://localhost:27017/bookstore'
+mongoose.connect(uri).then(() => {
+    console.log('Connected Successfully');
+    app.listen(PORT, () => {
+        console.log(`App is running at ${PORT}`);
+        db = mongoose.connection
+    })
+}).catch(() => {
+    console.error("Failed to Connect");
 })
 
 
