@@ -1,16 +1,46 @@
-import mongoose, {Schema} from "mongoose"
-interface book {
-    name: string
-    id: string
-    pages: number
-    yearPublished: string
-}
+import mongoose, { Schema } from "mongoose";
 
-const bookSchema = new Schema({
-    name: String,
-    author: String,
-    pages: Number,
-    yearPublished: Date,
-})
 
+const bookSchema = new Schema(
+    {
+        title: {
+            type: String,
+            required: true
+        },
+        subject: {
+            type: String,
+            required: true
+        },
+        author: {
+            type: String,
+            required: true
+        },
+        yearPublished: {
+            type: Number,
+            required: true
+        },
+        edition: {
+            type: Number,
+            required: true
+        },
+        copies: {
+            type: Number,
+            required: true
+        },
+        favs: {
+            type: Number,
+            required: true
+        },
+        price: {
+            type: Number,
+            required: true
+        },
+        comments: Array
+    },
+    {
+        timestamps: true
+    }
+)
+
+export const Book = mongoose.model('Book', bookSchema)
 
