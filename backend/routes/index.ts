@@ -1,4 +1,4 @@
-import express, {Response, Request} from 'express'
+import express from 'express'
 import booksRoute from './books'
 import buyersRouter from './buyers'
 import sellersRoute from './sellers'
@@ -6,7 +6,7 @@ import { loginRoute, signupRoute } from './auth'
 
 const router = express.Router()
 
-router.get('/', (req : Request, res: Response) => {
+router.get('/', (req, res) => {
     res.status(234).send('Hellow')
 })
 router.use('/books', booksRoute)

@@ -12,7 +12,11 @@ app.use('/', router)
 const PORT = 5000
 //Connecting to db
 export let db : mongoose.Connection
+
+//database uri
 const uri = 'mongodb://localhost:27017/bookstore'
+
+//Connecting to databse then starting server
 mongoose.connect(uri).then(() => {
     console.log('Connected Successfully');
     app.listen(PORT, () => {
