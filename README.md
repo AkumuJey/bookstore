@@ -12,3 +12,6 @@ added scripts start: 'node index.ts', dev: 'nodemon index.ts'
 
 # Adding typescript
 npm i @types/express @types/node
+
+# Hashing and adding salt to passwords
+npm i bcrypt-ts
