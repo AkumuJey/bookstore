@@ -28,7 +28,7 @@ const sellerSchema = new Schema(
       required: true,
     },
     retailStats: {
-      totalPurchases: {
+      totalSales: {
         type: Number,
         required: true,
       },

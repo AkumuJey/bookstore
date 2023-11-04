@@ -1,5 +1,6 @@
 import express from 'express'
-import { Seller, SellerType } from '../models/sellerModel'
+import { Seller } from '../models/sellerModel'
+import { genSaltSync, hashSync } from 'bcrypt-ts'
 
 
 const signupRoute = express.Router()
@@ -14,7 +15,15 @@ signupRoute.post('/', async (req, res) => {
             })
         }
         if(!seller) {
+            const salt = genSaltSync(10)
+            const hashedPassword = hashSync(req.body.password, salt)
+            const newSeller = new Seller({
+                ...req.body,
+                password: hashedPassword
+            })
+            const result = await newSeller.save()
             res.status(201).json({
+                result,
                 message: "Account created"
             })
         }
