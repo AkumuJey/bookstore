@@ -15,3 +15,10 @@ npm i @types/express @types/node
 
 # Hashing and adding salt to passwords
 npm i bcrypt-ts
+
+# Refactored typescript project
+Created source folder.
+changed tsconfig.json
+added nodemon.js
+changed script in package.json
+

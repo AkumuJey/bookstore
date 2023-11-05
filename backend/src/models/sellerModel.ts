@@ -39,5 +39,6 @@ const sellerSchema = new Schema(
   }
 );
 
-export const Seller = mongoose.model("Seller", sellerSchema);
+ const Seller = mongoose.model("Seller", sellerSchema);
+ export default Seller
 
