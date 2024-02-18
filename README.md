@@ -8,7 +8,9 @@ npm i express nodemon
 # Added /node_modules
 
 # Starting the app
+# for the bckende
 added scripts start: 'node index.ts', dev: 'nodemon index.ts'
+npm run start 
 
 # Adding typescript
 npm i @types/express @types/node

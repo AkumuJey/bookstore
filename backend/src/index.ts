@@ -20,7 +20,7 @@ const uri = 'mongodb://localhost:27017/bookstore'
 mongoose.connect(uri).then(() => {
     console.log('Connected Successfully');
     app.listen(PORT, () => {
-        console.log(`App is running at ${PORT}`);
+        console.log(`App is running at http://localhost:${PORT}`);
         db = mongoose.connection
     })
 }).catch(() => {
