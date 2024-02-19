@@ -16,7 +16,7 @@ signupRoute.post("/", async (req, res) => {
     }
     if (!userPresent) {
       genSalt(10)
-        .then((salt) => hash(password + "A04561", salt))
+        .then((salt) => hash(password + process.env.SECRET_PASSWORD, salt))
         .then((hashedPassword) => {
           const newUser = new UserModel({
             email,
