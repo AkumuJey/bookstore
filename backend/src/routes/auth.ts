@@ -1,8 +1,7 @@
-
 import express from "express";
-import { genSaltSync, hashSync } from "bcrypt-ts";
-import { UserModel } from "../db/users.js";
 
+import { genSalt, hash } from "bcrypt";
+import { UserModel } from "../db/users";
 
 const signupRoute = express.Router();
 const loginRoute = express.Router();
@@ -11,17 +10,28 @@ signupRoute.post("/", async (req, res) => {
   const { email, password, username, role } = req.body;
   try {
     const userPresent = await UserModel.findOne({ email });
-    console.log(userPresent);
-
     if (userPresent) {
       res.status(409).send({ error: "User already exists" });
       return;
     }
-    if(!userPresent) {
-        const saltedPassword = genSaltSync(10)
-        const hashedPassword = hashSync("A04561", saltedPassword)
-        const newUser = UserModel.create({ email, hashedPassword, username, role });
-        res.json({ message: "Signing up user...", email, hashedPassword, newUser });
+    if (!userPresent) {
+      genSalt(10)
+        .then((salt) => hash(password + "A04561", salt))
+        .then((hashedPassword) => {
+          const newUser = new UserModel({
+            email,
+            password: hashedPassword,
+            username,
+            role,
+          });
+          newUser.save()
+            .then((data) => {
+              res.status(201).json(data);
+            })
+            .catch((err) => {
+              res.status(400).send({ err });
+            });
+        });
     }
   } catch (error) {
     res.status(400).send({ error });
