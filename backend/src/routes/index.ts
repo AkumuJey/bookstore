@@ -3,7 +3,9 @@ import booksRoute from './books'
 import buyersRouter from './buyers'
 import sellersRoute from './sellers'
 import trial from './trial'
-import { loginRoute, signupRoute } from './auth'
+import loginRoute from './login'
+import signupRoute from './signup'
+
 
 const router = express.Router()
 
