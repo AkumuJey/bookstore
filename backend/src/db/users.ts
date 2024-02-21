@@ -24,7 +24,7 @@ const userSchema = new Schema({
 });
 
 // Create and export MongoDB model for a user
-export const UserModel = model("user", userSchema);
+export const UserModel = model("users", userSchema);
 
 //get users
 export const getUsers = async() => {

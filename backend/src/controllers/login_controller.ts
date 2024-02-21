@@ -1,6 +1,6 @@
 
 import { Request, Response } from "express"
-import { UserModel } from "db/users"
+import {UserModel} from "../db/users"
 import { compare } from "bcrypt";
 
 const loginController = async (req: Request, res: Response) => {
@@ -11,7 +11,7 @@ const loginController = async (req: Request, res: Response) => {
           res.status(401).json({message: "Login failed"})
           return
         }
-        await compare(req.body.password +  process.env.SECRET_PASSWORD, user.password, (err, result) =>{
+        compare(req.body.password +  process.env.SECRET_PASSWORD, user.password, (err, result) =>{
           if (err) {
             res.status(401).json({ err})
           }
