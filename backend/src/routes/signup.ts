@@ -1,8 +1,5 @@
-import signupController from "controllers/control";
+import signupController from "controllers/signup_controller";
 import express from "express";
-
-
-
 const signupRoute = express.Router();
 
 
