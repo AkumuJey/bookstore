@@ -1,6 +1,6 @@
 
 import { Request, Response } from "express"
-import {UserModel} from "../db/users"
+import {UserModel} from "../Models/userModel"
 import { compare } from "bcrypt";
 
 const loginController = async (req: Request, res: Response) => {

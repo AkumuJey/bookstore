@@ -1,8 +1,8 @@
 import { Request, Response } from "express"
 
 import { genSalt, hash } from "bcrypt";
-import { UserModel } from "../db/users";
-import { findExistingUser } from "models/user";
+import { UserModel } from "../Models/userModel";
+
 
  const signupController = async (req: Request, res: Response) => {
     const { email, password, username, role } = req.body;
