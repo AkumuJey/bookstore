@@ -1,6 +1,6 @@
 import express from "express";
 
-import { genSalt, hash } from "bcrypt";
+import { compare, genSalt, hash } from "bcrypt";
 import { UserModel } from "../db/users";
 
 const signupRoute = express.Router();
@@ -24,7 +24,8 @@ signupRoute.post("/", async (req, res) => {
             username,
             role,
           });
-          newUser.save()
+          newUser
+            .save()
             .then((data) => {
               res.status(201).json(data);
             })
@@ -38,8 +39,30 @@ signupRoute.post("/", async (req, res) => {
   }
 });
 loginRoute.post("/", async (req, res) => {
-  const users = await UserModel.find();
-  res.send(users);
+
+  try {
+    await UserModel.findOne({email: req.body.email}).then(async  (user)=> {
+      if (!user) {
+        res.status(401).json({message: "Login failed"})
+        return
+      }
+      await compare(req.body.password +  process.env.SECRET_PASSWORD, user.password, (err, result) =>{
+        if (err) {
+          res.status(401).json({ err})
+        }
+        if(!result){
+          res.status(401).json({ message:"Wrong Password!"})
+          return
+        }else{
+          res.status(200).json({message: "Suceess", user, result});
+        }
+      });
+      
+    });
+  } catch (error) {
+    console.log(error)
+    res.status(500).send({ error });
+  }
 });
 
 export { loginRoute, signupRoute };
