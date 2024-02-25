@@ -9,6 +9,7 @@ booksRoute.get("/", async (req, res) => {
     res.status(201).json({
       status: "Success",
       data: books,
+      length: books.length
     });
   } catch (error) {
     res.status(401).json({
@@ -17,5 +18,22 @@ booksRoute.get("/", async (req, res) => {
     });
   }
 });
+
+booksRoute.post("", async (req, res) => {
+    try {
+        const bookData = req.body
+        const  newBook = new BookModel(bookData);
+        await newBook.save()
+        res.status(201).json({
+            status:"success",
+            data:newBook
+        })
+    } catch (error) {
+        res.status(401).json({
+            status:"Faild",
+            message : error.message
+        })
+    }
+})
 
 export default booksRoute;
