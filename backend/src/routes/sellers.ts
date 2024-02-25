@@ -1,9 +1,8 @@
-import express, { Router, Request, Response } from 'express'
+import sellers_controller from '../Controllers/sellers_controller'
+import express, { Router } from 'express'
 
 const sellersRoute:Router = express.Router()
 
-sellersRoute.get('/', (req: Request, res: Response) => {
-    res.send('I want to sell my books.')
-})
+sellersRoute.get('/', sellers_controller)
 
 export default sellersRoute
