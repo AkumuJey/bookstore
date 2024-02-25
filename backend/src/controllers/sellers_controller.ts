@@ -2,8 +2,8 @@ import { UserModel } from "../Models/userModel";
 import { Request, Response } from "express";
 const sellers_controller = async (req: Request, res: Response) => {
   try {
-    const users = await UserModel.find({}, {password: 0 })
-    console.log(users)
+    const users = await UserModel.find({}, { password: 0 });
+    console.log(users);
     res.json({
       status: "success",
       data: users,
