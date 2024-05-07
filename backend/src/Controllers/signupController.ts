@@ -1,12 +1,11 @@
 import { Request, Response } from "express";
-
 import { genSalt, hash } from "bcrypt";
-import { UserModel } from "../Models/userModel";
+import { findUser, registerUser } from "../helpers/userHelpers";
 
 const signupController = async (req: Request, res: Response) => {
   const { email, password, username, role } = req.body;
   try {
-    const userPresent = await UserModel.findOne({ email });
+    const userPresent = await findUser(email);
     if (userPresent) {
       res.status(409).send({ error: "User already exists" });
       return;
@@ -15,14 +14,12 @@ const signupController = async (req: Request, res: Response) => {
       genSalt(10)
         .then((salt) => hash(password + process.env.SECRET_PASSWORD, salt))
         .then((hashedPassword) => {
-          const newUser = new UserModel({
-            email,
+          registerUser({
+            email: email,
             password: hashedPassword,
-            username,
-            role,
-          });
-          newUser
-            .save()
+            role: role,
+            username: username,
+          })
             .then((doc) => {
               res.status(201).json({
                 status: "success",
