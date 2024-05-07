@@ -67,7 +67,6 @@ booksRoute.get("/:id", async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
-      status: "Error",
       message: error.message,
     });
   }
@@ -78,8 +77,7 @@ booksRoute.patch("/:id", async (req, res) => {
     const id = req.params.id;
     const body = req.body;
     if (!id) {
-      res.status(400).json({ status: "Invalid ID" });
-      return;
+      return res.status(500).json({ status: "Invalid ID" });
     }
     const updateBook = await BookModel.findByIdAndUpdate(id, req.body, {
       new: true,
@@ -87,11 +85,10 @@ booksRoute.patch("/:id", async (req, res) => {
     res.status(201).json({
       status: "Updated",
       data: updateBook,
-      body
+      body,
     });
   } catch (error) {
     res.status(500).json({
-      status: "Error",
       message: error.message,
     });
   }
