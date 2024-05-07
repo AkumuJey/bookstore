@@ -1,23 +1,10 @@
+import { getBooksController } from "../Controllers/booksControllers";
 import { BookModel } from "../Models/bookModel";
 import express from "express";
 
 const booksRoute = express.Router();
 
-booksRoute.get("/", async (req, res) => {
-  try {
-    const books = await BookModel.find({});
-    res.status(201).json({
-      status: "Success",
-      data: books,
-      length: books.length,
-    });
-  } catch (error) {
-    res.status(401).json({
-      status: "Failed",
-      message: error.message,
-    });
-  }
-});
+booksRoute.get("/", getBooksController);
 
 booksRoute.post("", async (req, res) => {
   try {
@@ -30,7 +17,7 @@ booksRoute.post("", async (req, res) => {
     });
   } catch (error) {
     res.status(401).json({
-      status: "Faild",
+      status: "Failed",
       message: error.message,
     });
   }
