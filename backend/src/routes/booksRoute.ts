@@ -1,5 +1,6 @@
 import {
   addBookController,
+  checkIdParam,
   deleteBookController,
   editBookController,
   findBookController,
@@ -13,10 +14,10 @@ booksRoute.get("/", getBooksController);
 
 booksRoute.post("", addBookController);
 
-booksRoute.delete("/:id", deleteBookController);
+booksRoute.delete("/:id", checkIdParam, deleteBookController);
 
-booksRoute.get("/:id", findBookController);
+booksRoute.get("/:id", checkIdParam, findBookController);
 
-booksRoute.patch("/:id", editBookController);
+booksRoute.patch("/:id", checkIdParam, editBookController);
 
 export default booksRoute;

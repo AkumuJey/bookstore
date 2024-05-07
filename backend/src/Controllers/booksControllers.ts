@@ -1,5 +1,17 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { BookModel } from "../Models/bookModel";
+
+export const checkIdParam = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const id = req.params.id;
+  if (!id) {
+    return res.status(400).json({ status: "Invalid ID" });
+  }
+  next();
+};
 
 export const getBooksController = async (req: Request, res: Response) => {
   try {
@@ -37,10 +49,6 @@ export const addBookController = async (req: Request, res: Response) => {
 export const deleteBookController = async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
-    if (!id) {
-      res.status(400).json({ status: "Invalid ID" });
-      return;
-    }
     const result = await BookModel.findByIdAndRemove(id);
     res.status(200).json({ status: "Deleted", result });
   } catch (error) {
@@ -54,10 +62,6 @@ export const deleteBookController = async (req: Request, res: Response) => {
 export const findBookController = async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
-    if (!id) {
-      res.status(400).json({ status: "Invalid ID" });
-      return;
-    }
     const book = await BookModel.findById(id);
     res.status(200).json({
       status: "Success",
@@ -74,9 +78,6 @@ export const editBookController = async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
     const body = req.body;
-    if (!id) {
-      return res.status(500).json({ status: "Invalid ID" });
-    }
     const updateBook = await BookModel.findByIdAndUpdate(id, req.body, {
       new: true,
     });
