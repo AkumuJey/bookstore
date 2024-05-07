@@ -1,33 +1,32 @@
+import { Request, Response } from "express";
 
-import { Request, Response } from "express"
-import {UserModel} from "../Models/userModel"
 import { compare } from "bcrypt";
+import { findUser } from "../helpers/userHelpers";
 
 const loginController = async (req: Request, res: Response) => {
-
-    try {
-      await UserModel.findOne({email: req.body.email}).then(async  (user)=> {
-        if (!user) {
-          res.status(401).json({message: "Login failed"})
-          return
-        }
-        compare(req.body.password +  process.env.SECRET_PASSWORD, user.password, (err, result) =>{
-          if (err) {
-            res.status(401).json({ err})
-          }
-          if(!result){
-            res.status(401).json({ message:"Wrong Password!"})
-            return
-          }else{
-            res.status(200).json({message: "Suceess", user, result});
-          }
-        });
-        
-      });
-    } catch (error) {
-      console.log(error)
-      res.status(500).send({ error });
+  try {
+    const user = await findUser(req.body.email);
+    if (!user) {
+      return res.status(401).json({ message: "Login failed" });
     }
+    compare(
+      req.body.password + process.env.SECRET_PASSWORD,
+      user.password,
+      (err, result) => {
+        if (err) {
+          res.status(401).json({ err });
+        }
+        if (!result) {
+          res.status(401).json({ message: "Wrong Password!" });
+          return;
+        } else {
+          res.status(200).json({ message: "Suceess", user, result });
+        }
+      }
+    );
+  } catch (error) {
+    res.status(500).send({ message: error.message });
   }
+};
 
-  export default loginController
+export default loginController;
