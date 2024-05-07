@@ -1,5 +1,11 @@
 import { NextFunction, Request, Response } from "express";
-import { BookModel } from "../Models/bookModel";
+import {
+  addNewBook,
+  deleteBook,
+  findBooks,
+  findOneBook,
+  updateBook,
+} from "../helpers/booksHelper";
 
 export const checkIdParam = async (
   req: Request,
@@ -15,7 +21,7 @@ export const checkIdParam = async (
 
 export const getBooksController = async (req: Request, res: Response) => {
   try {
-    const books = await BookModel.find({});
+    const books = await findBooks();
     return res.status(201).json({
       status: "Success",
       data: books,
@@ -31,9 +37,7 @@ export const getBooksController = async (req: Request, res: Response) => {
 
 export const addBookController = async (req: Request, res: Response) => {
   try {
-    const bookData = req.body;
-    const newBook = new BookModel(bookData);
-    await newBook.save();
+    const newBook = await addNewBook(req.body);
     res.status(201).json({
       status: "success",
       data: newBook,
@@ -49,7 +53,7 @@ export const addBookController = async (req: Request, res: Response) => {
 export const deleteBookController = async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
-    const result = await BookModel.findByIdAndRemove(id);
+    const result = await deleteBook(id);
     res.status(200).json({ status: "Deleted", result });
   } catch (error) {
     res.status(500).json({
@@ -62,7 +66,7 @@ export const deleteBookController = async (req: Request, res: Response) => {
 export const findBookController = async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
-    const book = await BookModel.findById(id);
+    const book = await findOneBook(id);
     res.status(200).json({
       status: "Success",
       data: book,
@@ -78,12 +82,10 @@ export const editBookController = async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
     const body = req.body;
-    const updateBook = await BookModel.findByIdAndUpdate(id, req.body, {
-      new: true,
-    });
+    const updatedBook = await updateBook(id, req.body);
     res.status(201).json({
       status: "Updated",
-      data: updateBook,
+      data: updatedBook,
       body,
     });
   } catch (error) {
