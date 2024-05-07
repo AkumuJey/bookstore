@@ -1,6 +1,6 @@
 import { UserModel } from "../Models/userModel";
 import { Request, Response } from "express";
-const sellers_controller = async (req: Request, res: Response) => {
+export const sellersController = async (req: Request, res: Response) => {
   try {
     const users = await UserModel.find({}, { password: 0 });
     console.log(users);
@@ -15,4 +15,3 @@ const sellers_controller = async (req: Request, res: Response) => {
     });
   }
 };
-export default sellers_controller;

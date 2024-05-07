@@ -21,11 +21,12 @@ export const checkIdParam = async (
 
 export const getBooksController = async (req: Request, res: Response) => {
   try {
-    const books = await findBooks();
+    const { books, totalCopies } = await findBooks();
     return res.status(201).json({
       status: "Success",
-      data: books,
-      length: books.length,
+      books,
+      totalBookTypes: books.length,
+      totalCopies,
     });
   } catch (error) {
     return res.status(401).json({

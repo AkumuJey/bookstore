@@ -1,4 +1,4 @@
-import mongoose, { Schema, model } from "mongoose";
+import { Schema, model } from "mongoose";
 
 //Book Schema and model
 const bookSchema = new Schema(
@@ -6,7 +6,7 @@ const bookSchema = new Schema(
     title: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
     },
     subject: {
       type: String,
