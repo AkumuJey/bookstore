@@ -1,9 +1,8 @@
 import express from "express";
+import authRoute from "./authRoute";
 import booksRoute from "./booksRoute";
 import buyersRouter from "./buyersRoute";
 import sellersRoute from "./sellersRoute";
-import loginRoute from "./loginRoute";
-import signupRoute from "./signupRoute";
 
 const router = express.Router();
 
@@ -13,7 +12,7 @@ router.get("/", (req, res) => {
 router.use("/books", booksRoute);
 router.use("/buyers", buyersRouter);
 router.use("/sellers", sellersRoute);
-router.use("/login", loginRoute);
-router.use("/signup", signupRoute);
+router.use("/", authRoute);
+router.use("/", authRoute);
 
 export default router;
