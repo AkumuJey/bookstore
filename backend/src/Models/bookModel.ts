@@ -24,9 +24,13 @@ const bookSchema = new Schema(
       type: Number,
       required: true,
     },
-    copies: {
+    availableCopies: {
       type: Number,
       required: true,
+    },
+    soldCopies: {
+      type: Number,
+      default: 0,
     },
     favs: {
       type: Number,

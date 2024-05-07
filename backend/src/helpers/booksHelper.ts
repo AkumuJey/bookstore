@@ -2,8 +2,11 @@ import { BookModel } from "../Models/bookModel";
 
 export const findBooks = async () => {
   const books = await BookModel.find();
-  const totalCopies = books.reduce((acc, book) => acc + book.copies, 0);
-  return { books, totalCopies };
+  const totalAvailableCopies = books.reduce(
+    (acc, book) => acc + book.availableCopies,
+    0
+  );
+  return { books, totalAvailableCopies };
 };
 
 export const addNewBook = async (bookData: any) => {
